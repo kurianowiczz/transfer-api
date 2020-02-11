@@ -15,5 +15,6 @@ export default {
     email: process.env.EMAIL,
     password: process.env.PASSWORD,
     mailService: process.env.MAIL_SERVICE,
+    jobs: process.env.AGENDA,
 
 };

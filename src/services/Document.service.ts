@@ -13,24 +13,24 @@ export default class DocumentService {
         });
     }
 
-    public static async findDocByTitle(title: string): Promise<IDocumentModel> {
-        return await documentModel.findOne({ title });
+    public static async findDocByTitle(title: string) {
+        return documentModel.findOne({ title });
     }
 
-    public static async findDocByPath(path: string): Promise<IDocumentModel> {
-        return await documentModel.findOne({ path });
+    public static async findDocByPath(path: string) {
+        return documentModel.findOne({ path });
     }
 
     public static async findAll(pagination?: {
         pageSize: number;
         pageNumber: number;
-    }): Promise<IDocumentModel[]> {
+    }): Promise<IDocument[]> {
         const documents = await documentModel.find();
         return pagination ? documents.slice(
-                  Math.floor(documents.length / pagination.pageSize) *
+            Math.floor(documents.length / pagination.pageSize) *
                       pagination.pageNumber,
                   Math.floor(documents.length / pagination.pageSize) *
-                      (pagination.pageNumber + 1)
+                      (pagination.pageNumber + 1),
               )
             : documents;
     }
@@ -41,11 +41,11 @@ export default class DocumentService {
 
     public static async findByExpire(
         expire: Moment,
-    ): Promise<IDocumentModel[]> {
+    ): Promise<IDocument[]> {
         return documentModel.find({
             expire: {
-                $lte: new Date(expire.toISOString())
-            }
+                $lte: new Date(expire.toISOString()),
+            },
         });
     }
 

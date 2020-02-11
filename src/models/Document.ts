@@ -5,7 +5,7 @@ const documentSchema: Schema = new Schema({
     title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     expire: { type: Date, required: true },
-    path: { type: String, required: false }
+    path: { type: String, required: false },
 });
 
 export interface IDocument extends mongoose.Document {

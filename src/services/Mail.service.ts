@@ -1,7 +1,7 @@
-import {Service} from 'typedi';
+import { Service } from 'typedi';
 import config from '../config';
 import * as nodemailer from 'nodemailer';
-import {SentMessageInfo, Transporter} from 'nodemailer';
+import { SentMessageInfo, Transporter } from 'nodemailer';
 
 @Service()
 export default class MailService {

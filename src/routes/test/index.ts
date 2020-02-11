@@ -11,9 +11,9 @@ testRouter.get('/',
     const mailService = Container.get(MailService);
     const mail = await mailService.sendMail(
         'rybkagovoritspasibo@gmail.com', 'hihihihihi', 'hello world')
-        .catch(err => console.log(err));;
+        .catch((err) => console.log(err));
     res.send('hi');
-    }
+    },
 ));
 
 export default testRouter;

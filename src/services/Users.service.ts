@@ -15,13 +15,8 @@ export default class UsersService {
             lastName: user.lastName,
             password: user.password,
             salt: user.salt,
-            cardData: {},
             telegram: null,
             role: UserRole.USER,
-            language: user.language,
-            location: null,
-            phone: null,
-            birthday: null,
         });
     }
 

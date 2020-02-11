@@ -7,7 +7,6 @@ import HashService from '../../services/Hash.service';
 import config from '../../config';
 import validation from '../../shared/validation';
 import * as Joi from 'joi';
-import UserLanguage from '../../enums/UserLanguage';
 
 const router = Router();
 
@@ -18,9 +17,7 @@ router.post('/add',
                  lastName: Joi.string().alphanum().min(3).max(30).required(),
                  email: Joi.string().min(5).max(255).required().email(),
                  password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-                 language: Joi.string().valid(Object.values(UserLanguage)).required(),
-
-         })
+         }),
     ),
     async (req: Request, res: Response) => {
     const usersService = Container.get(UsersService);

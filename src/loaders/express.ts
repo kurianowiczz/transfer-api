@@ -6,8 +6,4 @@ class ServerError extends Error {
         super(m);
         Object.setPrototypeOf(this, ServerError.prototype);
     }
-
-
-
-
 }
