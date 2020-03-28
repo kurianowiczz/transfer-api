@@ -5,9 +5,9 @@ import JWTService from '../services/JWT.service';
 import UsersService from '../services/Users.service';
 import loadAgenda from './agenda.loader';
 
-export default async () => {
+export default async (env: string = 'development') => {
     loadModels();
-    await loadMongoose();
+    await loadMongoose(env);
     Container.get(JWTService);
     Container.get(UsersService);
     const agenda = await loadAgenda();

@@ -4,7 +4,7 @@ import { Moment } from 'moment';
 import documentModel, { IDocument, IDocumentModel } from '../models/Document';
 
 export default class DocumentService {
-    public static async addDoc(document: IDocument): Promise<IDocument> {
+    public async addDoc(document: IDocument): Promise<IDocument> {
         return await documentModel.create({
             title: document.title,
             description: document.description,
@@ -21,7 +21,7 @@ export default class DocumentService {
         return documentModel.findOne({ path });
     }
 
-    public static async findAll(pagination?: {
+    public async findAll(pagination?: {
         pageSize: number;
         pageNumber: number;
     }): Promise<IDocument[]> {
