@@ -5,7 +5,7 @@ import { Job } from 'agenda';
 
 import config from '../config';
 import DocumentService from '../services/Document.service';
-import { IDocument } from '../models/Document';
+import { IDocument } from '../models/Document.model';
 import FileService from '../services/File.service';
 
 export default async () => {

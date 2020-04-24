@@ -7,14 +7,14 @@ import HashService from '../../services/Hash.service';
 import config from '../../config';
 import validation from '../../shared/validation';
 import * as Joi from 'joi';
+import {authOnly} from './middleware';
 
 const router = Router();
 
 router.post('/add',
     validation(
          Joi.object({
-             firstName: Joi.string().min( 3).max(30).required(),
-             lastName: Joi.string().alphanum().min(3).max(30).required(),
+             name: Joi.string().min( 3).max(30).required(),
              email: Joi.string().min(5).max(255).required().email(),
              password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
          }),
@@ -53,7 +53,7 @@ router.post('/login',
     if (!isPasswordValid) {
         return res.status(400).send({code: 400, error: 'Error password'});
     }
-
+    console.log('+');
     const token = jwtService.generateToken(user);
     res.send({ token, user });
 
@@ -67,5 +67,11 @@ router.delete('/remove',
         res.send(user);
 
     });
+
+router.get('/me', authOnly,
+    async (req: Request, res: Response) => {
+        // @ts-ignore
+        return res.send({ user: req.user });
+});
 
 export default router;

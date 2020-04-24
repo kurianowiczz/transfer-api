@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import { Moment } from 'moment';
 
-import documentModel, { IDocument, IDocumentModel } from '../models/Document';
+import documentModel, { IDocument, IDocumentModel } from '../models/Document.model';
 
 export default class DocumentService {
     public async addDoc(document: IDocument): Promise<IDocument> {

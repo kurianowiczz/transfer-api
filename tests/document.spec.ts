@@ -4,7 +4,7 @@ import { Container } from 'typedi';
 import loader from '../src/loaders';
 import userModel from '../src/models/User.model';
 import DocumentService from '../src/services/Document.service';
-import {IDocument} from '../src/models/Document';
+import {IDocument} from '../src/models/Document.model';
 
 describe('Document Test', () => {
     before(async () => {

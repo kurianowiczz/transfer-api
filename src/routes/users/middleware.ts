@@ -1,23 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
-import { IUser } from '../../models/User.model';
-import * as Joi from 'joi';
+import {Container} from 'typedi';
+import JWTService from '../../services/JWT.service';
 
-export const validateUser = (req: Request, res: Response, next: NextFunction) => {
-    const user = req.body as IUser;
-
-    const schema = Joi.object({
-        firstName: Joi.string().min( 3).max(30).required(),
-        lastName: Joi.string().alphanum().min(3).max(30).required(),
-        email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-    });
-
-    const result = schema.validate(user);
-
-    if (result.error) {
-        res.status(400).send({code: 400, error: result.error});
-    } else {
+export const authOnly = async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization;
+    if (!!token) {
+        const jwtService = Container.get(JWTService);
+        const user = await jwtService.verifyToken(token);
+        // @ts-ignore
+        req.user = user.data;
         next();
+    } else {
+        return res.status(400).send({ code: 400, body: 'Illegal token' });
     }
 };
 

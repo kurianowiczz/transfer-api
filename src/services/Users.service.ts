@@ -11,8 +11,7 @@ export default class UsersService {
 
         return await userModel.create({
             email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            name: user.name,
             password: user.password,
             salt: user.salt,
             telegram: null,
