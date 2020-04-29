@@ -1,11 +1,16 @@
 import { Schema } from 'mongoose';
 import * as mongoose from 'mongoose';
+import {IUser} from './User.model';
 
 const documentSchema: Schema = new Schema({
     title: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     expire: { type: Date, required: true },
     path: { type: String, required: false },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 });
 
 export interface IDocument extends mongoose.Document {
@@ -13,6 +18,7 @@ export interface IDocument extends mongoose.Document {
     description: string;
     expire: Date;
     path: string;
+    user: IUser;
 }
 
 export type IDocumentModel = mongoose.Model<IDocument & mongoose.Document>;

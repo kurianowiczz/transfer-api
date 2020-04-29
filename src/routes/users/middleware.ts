@@ -7,6 +7,7 @@ export const authOnly = async (req: Request, res: Response, next: NextFunction) 
     if (!!token) {
         const jwtService = Container.get(JWTService);
         const user = await jwtService.verifyToken(token);
+        console.log(user);
         // @ts-ignore
         req.user = user.data;
         next();

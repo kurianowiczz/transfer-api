@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import { ungzip } from 'node-gzip';
+import * as path from 'path';
 
 export default class FileService {
-    public static async readArch(fileName: string, rowsCount: number) {
+    public async readArch(fileName: string, rowsCount: number) {
         try {
             const data = fs.readFileSync(fileName);
             const decompressed = await ungzip(data);
@@ -15,11 +16,27 @@ export default class FileService {
         }
     }
 
-    public static deleteFile(path: string) {
+    public static deleteFile(filePath: string) {
         return new Promise<{ removed: string }>((resolve, reject) => {
-            fs.unlink(path, (err) => {
+            fs.unlink(filePath, (err) => {
                 if (err) { reject(err); }
-                resolve({ removed: path });
+                resolve({ removed: filePath });
+            });
+        });
+    }
+
+    public addFile(fileName: string, file: unknown, userId: string) {
+        return new Promise<{ path: string }>((resolve, reject) => {
+            //const fullPath = path.resolve(`../../files/${userId}/`, fileName);
+            const fullPath = path.join(`../../files/${userId}/`, fileName);
+            console.log(fullPath);
+            // @ts-ignore
+            file.mv(fullPath, (error) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve({ path: fullPath });
+                }
             });
         });
     }

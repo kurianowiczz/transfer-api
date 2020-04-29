@@ -7,7 +7,7 @@ import HashService from '../../services/Hash.service';
 import config from '../../config';
 import validation from '../../shared/validation';
 import * as Joi from 'joi';
-import {authOnly} from './middleware';
+import { authOnly } from './middleware';
 
 const router = Router();
 
@@ -28,8 +28,8 @@ router.post('/add',
 
     const user = await usersService.addUser({ ...req.body, password: hash, salt } as IUser);
 
-    const token = jwtService.generateToken(user);
-    console.log({ token, user });
+    const token = jwtService.generateToken(user.toObject());
+    console.log({ token, user: user.toObject() });
 
     res.send({ token, user });
 
@@ -54,8 +54,8 @@ router.post('/login',
         return res.status(400).send({code: 400, error: 'Error password'});
     }
     console.log('+');
-    const token = jwtService.generateToken(user);
-    res.send({ token, user });
+    const token = jwtService.generateToken(user.toObject());
+    res.send({ token, user: user.toObject() });
 
 });
 

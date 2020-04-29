@@ -56,4 +56,8 @@ export default class DocumentService {
             },
         });
     }
+    public async findByUserId(userId: mongoose.Types.ObjectId[]) {
+        const documents = await documentModel.find({userId});
+        return documents;
+    }
 }
