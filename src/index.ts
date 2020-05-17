@@ -16,6 +16,7 @@ const startApp = async () => {
     app.use(fileUpload());
     withRouter(app);
     await loader();
+    app.use(express.static('files'));
     app.listen(config.port, () => {
         console.log(`Server started on port ${config.port}`);
     });

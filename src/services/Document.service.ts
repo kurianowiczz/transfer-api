@@ -1,15 +1,17 @@
 import * as mongoose from 'mongoose';
-import { Moment } from 'moment';
+import {Moment} from 'moment';
 
-import documentModel, { IDocument, IDocumentModel } from '../models/Document.model';
+import documentModel, {IDocument} from '../models/Document.model';
 
 export default class DocumentService {
-    public async addDoc(document: IDocument): Promise<IDocument> {
+    public async addDoc(document: IDocument, user: string): Promise<IDocument> {
         return await documentModel.create({
-            title: document.title,
             description: document.description,
             expire: document.expire,
             path: document.path,
+            user: mongoose.Types.ObjectId(user),
+            fileName: document.fileName,
+            downloadLink: document.downloadLink,
         });
     }
 
@@ -56,8 +58,7 @@ export default class DocumentService {
             },
         });
     }
-    public async findByUserId(userId: mongoose.Types.ObjectId[]) {
-        const documents = await documentModel.find({userId});
-        return documents;
+    public async findByUserId(userId: string) {
+        return documentModel.find({user: mongoose.Types.ObjectId(userId)});
     }
 }

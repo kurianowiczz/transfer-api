@@ -26,16 +26,20 @@ export default class FileService {
     }
 
     public addFile(fileName: string, file: unknown, userId: string) {
-        return new Promise<{ path: string }>((resolve, reject) => {
-            //const fullPath = path.resolve(`../../files/${userId}/`, fileName);
-            const fullPath = path.join(`../../files/${userId}/`, fileName);
-            console.log(fullPath);
+        return new Promise<{ path: string; downloadLink: string; }>(async (resolve, reject) => {
+            const name = Date.now() + '_' + fileName;
+            const fullPath = path.resolve('./files/')
+                + '\\' + userId + '\\'
+                + name;
+            // tslint:disable-next-line:no-empty
+            await fs.mkdir(path.resolve('./files/' + userId + '/'), () => {});
+            const downloadLink = '/' + userId + '/' + name;
             // @ts-ignore
-            file.mv(fullPath, (error) => {
+            await file.mv(fullPath, (error) => {
                 if (error) {
                     reject(error);
                 } else {
-                    resolve({ path: fullPath });
+                    resolve({ path: fullPath, downloadLink });
                 }
             });
         });

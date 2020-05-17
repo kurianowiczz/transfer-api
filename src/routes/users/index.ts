@@ -7,7 +7,7 @@ import HashService from '../../services/Hash.service';
 import config from '../../config';
 import validation from '../../shared/validation';
 import * as Joi from 'joi';
-import { authOnly } from './middleware';
+import { authOnly, adminOnly } from './middleware';
 
 const router = Router();
 
@@ -53,7 +53,6 @@ router.post('/login',
     if (!isPasswordValid) {
         return res.status(400).send({code: 400, error: 'Error password'});
     }
-    console.log('+');
     const token = jwtService.generateToken(user.toObject());
     res.send({ token, user: user.toObject() });
 
@@ -72,6 +71,19 @@ router.get('/me', authOnly,
     async (req: Request, res: Response) => {
         // @ts-ignore
         return res.send({ user: req.user });
+});
+
+router.get('/all', authOnly, adminOnly, async (req: Request, res: Response) => {
+    const usersService = Container.get(UsersService);
+    const all = await usersService.getAll();
+    return res.send({ users: all });
+});
+
+router.post('/ban', authOnly, adminOnly, async (req: Request, res: Response) => {
+    const usersService = Container.get(UsersService);
+    await usersService.toggleBan(req.body.id);
+    const all = await usersService.getAll();
+    return res.send({ users: all });
 });
 
 export default router;

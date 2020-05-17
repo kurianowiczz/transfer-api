@@ -8,6 +8,7 @@ export interface IUser extends mongoose.Document {
   role: string;
   password: string;
   salt: string;
+  banned: boolean;
 }
 
 const User: Schema = new Schema({
@@ -17,6 +18,7 @@ const User: Schema = new Schema({
     role: { type: String, required: true },
     password: { type: String, required: true },
     salt: { type: String, required: true },
+    banned: { type: Boolean, required: false, default: false },
 },
 );
 
@@ -26,6 +28,8 @@ User.set('toObject', {
         email: ret.email,
         telegram: ret.telegram,
         role: ret.role,
+        name: ret.name,
+        banned: ret.banned,
     }),
 });
 

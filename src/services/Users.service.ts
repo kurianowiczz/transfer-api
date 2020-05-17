@@ -34,5 +34,20 @@ export default class UsersService {
 
         });
     }
+
+    public async getAll() {
+        const userModel = Container.get('userModel') as IUserModel;
+        const all = await userModel.find();
+        return all.map((user) => user.toObject());
+    }
+
+    public async toggleBan(id: string) {
+        const userModel = Container.get('userModel') as IUserModel;
+        const user = await userModel.findOne({_id: mongoose.Types.ObjectId(id)});
+        if (user) {
+            user.banned = !user.banned;
+            await user.save();
+        }
+    }
 }
 
