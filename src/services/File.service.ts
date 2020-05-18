@@ -27,9 +27,10 @@ export default class FileService {
 
     public addFile(fileName: string, file: unknown, userId: string) {
         return new Promise<{ path: string; downloadLink: string; }>(async (resolve, reject) => {
+            const devider = process.platform === 'win32' ? '\\' : '/';
             const name = Date.now() + '_' + fileName;
             const fullPath = path.resolve('./files/')
-                + '\\' + userId + '\\'
+                + devider + userId + devider
                 + name;
             // tslint:disable-next-line:no-empty
             await fs.mkdir(path.resolve('./files/' + userId + '/'), () => {});
